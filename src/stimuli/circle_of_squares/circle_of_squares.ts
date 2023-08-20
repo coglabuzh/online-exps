@@ -31,7 +31,6 @@ export const circleOfSquares = (props: Props): string => {
 		html += /*html*/ `
 			<div style="
 			position: absolute;
-			border-radius: 200px;
 			top: 50%; 
 			left: 50%; 
 			width: 100px; 
