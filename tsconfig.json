@@ -1,0 +1,12 @@
+{
+	"compilerOptions": {
+		/* Basic Options */
+		
+		
+		/* Experimental Options */
+		"experimentalDecorators": true,
+		"useDefineForClassFields": false,
+	
+	},
+	
+}
