@@ -38,8 +38,9 @@
 
 4. Make changes
 
-- Make frequent, small commits
+- Make frequent, small commits.
 - Regularly pull the latest changes from the dev branch to stay updated, especially if your PR takes time.
+- Any new user-facing function you add must be added as a default export to `src/index.ts` in order to be accessible for library users.
 
 5. Pull request
 
@@ -104,6 +105,11 @@ Examples. Preferably, every feature should be showcased in at least one example.
 - If a function needs a longer documentation, create a folder of the same name with the source file and a `readme.md` file. This should be the default for stimuli functions.
 
 - Create an example under `/examples` for more complex features, such as stimuli functions.
+
+#### Naming
+- Files and folders: e.g. `/circle-of-squares`, `circle-of-squares.ts`
+- Functions: use `camelCase`, e.g. `circleOfSquares`
+- Types: use uppercase, e.g. `Frames`
 
 #### Types
 
