@@ -1,14 +1,13 @@
 {
-  "name": "jspsych_uzh",
+  "name": "@coglabuzh/webpsy.js",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc"
   },
   "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "lit": "^2.7.6"
-  }
+  "license": "ISC"
 }

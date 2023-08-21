@@ -1,12 +1,16 @@
 {
 	"compilerOptions": {
-		/* Basic Options */
-		
-		
-		/* Experimental Options */
-		"experimentalDecorators": true,
-		"useDefineForClassFields": false,
-	
+		"target": "es6",
+		"module": "commonjs",
+		"outDir": "./dist",
+		"rootDir": "./src",
+		"declaration": true,
+		"strict": false
 	},
-	
+	"include": [
+		"src/**/*.ts"
+	],
+	"exclude": [
+		"node_modules"
+	]
 }

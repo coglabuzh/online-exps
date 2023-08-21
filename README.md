@@ -27,7 +27,7 @@ We highly value the input of the psychological research community during this de
 
 Our lab is diligently working to enhance WebPsy.js with additional functionalities. Stay tuned for regular updates as we progress towards a stable and polished release.
 
-🌟 Join the PsyCraft.js Community 🌟
+🌟 Join the WebPsy.js Community 🌟
 
 We invite you to be part of the WebPsy.js development by sharing your experiences, reporting issues, and engaging in discussions on our repository. Your involvement will be instrumental in making WebPsy.js a valuable asset for psychological researchers worldwide.
 
