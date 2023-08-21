@@ -13,4 +13,6 @@
 	"exclude": [
 		"node_modules"
 	]
+	,
+	"baseUrl": "./"
 }
