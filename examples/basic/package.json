@@ -3,6 +3,7 @@
   "scripts": {
     "jspsych": "jspsych -e experiment",
     "start": "npm run jspsych -- run",
+    "dev": "npm run jspsych -- run",
     "build": "npm run jspsych -- build",
     "jatos": "npm run jspsych -- build --jatos"
   },

@@ -11,7 +11,7 @@ import "../styles/main.scss";
 
 // import { circleOfSquares } from "../../../src/stimuli/circle_of_squares/circle_of_squares";
 
-import {circleOfSquares} from '@coglabuzh/webpsy.js'
+import {circleOfSquares,  colorPicker} from '@coglabuzh/webpsy.js'
 
 import FullscreenPlugin from "@jspsych/plugin-fullscreen";
 import HtmlKeyboardResponsePlugin from "@jspsych/plugin-html-keyboard-response";
@@ -51,21 +51,30 @@ export async function run({
   //   trial_duration: 500000
   // });
 
+  // timeline.push({
+  //   type: HtmlKeyboardResponsePlugin,
+
+  //   stimulus: circleOfSquares({
+  //     frames: [
+  //       { content: "a" },
+  //       { content: "b" },
+  //       { content: "b" },
+  //       { content: "c" },
+  //       { content: "hello" },
+  //       { content: "dddd" },
+  //       { content: "hello", text_color: "red" },
+  //     ],
+  //     bg_color: "yellow",
+  //   }),
+  //   trial_duration: 500000,
+  // });
+
+  console.log(colorPicker({radius: 500}))
+
   timeline.push({
     type: HtmlKeyboardResponsePlugin,
 
-    stimulus: circleOfSquares({
-      frames: [
-        { content: "a" },
-        { content: "b" },
-        { content: "b" },
-        { content: "c" },
-        { content: "hello" },
-        { content: "dddd" },
-        { content: "hello", text_color: "red" },
-      ],
-      bg_color: "yellow",
-    }),
+    stimulus: colorPicker({radius: 20}),
     trial_duration: 500000,
   });
 

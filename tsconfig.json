@@ -5,7 +5,9 @@
 		"outDir": "./dist",
 		"rootDir": "./src",
 		"declaration": true,
-		"strict": false
+		"strict": false,
+		"experimentalDecorators": true,
+		"useDefineForClassFields": false,
 	},
 	"include": [
 		"src/**/*.ts"
