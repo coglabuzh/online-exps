@@ -24,6 +24,20 @@ export default class ColorPicker extends LitElement {
       left: 0px;
       right: 0px
     }
+    .color-swatch{
+      height: 30px;
+      width: 30px;
+
+
+      
+    }
+    .swatch-container{
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+    }
   `;
 
   @property({ type: String }) selectedColor = "#FFFFFF";
@@ -53,8 +67,8 @@ export default class ColorPicker extends LitElement {
 
 
 
-    const WIDTH = 800;
-    const HEIGHT = 800;
+    const WIDTH = 600;
+    const HEIGHT = 600;
     const SCALE = 6;
     const MIDDLE_X = WIDTH / 2;
     const MIDDLE_Y = HEIGHT / 2;
@@ -115,9 +129,11 @@ export default class ColorPicker extends LitElement {
 
   render() {
     return html`
-      <div class="container">
-        <canvas width="800" height="800"></canvas>
+      <div><div class="container">
+        <canvas width="600" height="600"></canvas>
         <div class="inner-html">${unsafeHTML(this.innerHTML)}</div>
+        </div>
+        <div class="swatch-container">selected color: <div class="color-swatch" style="${"background-color: " + this.selectedColor}"></div></div>
       </div>
     `;
   }

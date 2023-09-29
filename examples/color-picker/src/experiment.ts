@@ -42,39 +42,10 @@ export async function run({
     video: assetPaths.video,
   });
 
-  // Welcome screen
-
-  // timeline.push({
-  //   type: HtmlKeyboardResponsePlugin,
-
-  //   stimulus: `<circle-of-squares .frames="${[{ content: "s" }, { content: "a" }, { content: "a" }, { content: "b" }, { content: "c" }, { content: "hello" }, { content: "dddd" }, { content: "hello", text_color: "red" },]}" .onFrameClick="${(i) => console.log('Frame ' + i + ' clicked')}"></circle-of-squares>`,
-  //   trial_duration: 500000
-  // });
-
-  // timeline.push({
-  //   type: HtmlKeyboardResponsePlugin,
-
-  //   stimulus: circleOfSquares({
-  //     frames: [
-  //       { content: "a" },
-  //       { content: "b" },
-  //       { content: "b" },
-  //       { content: "c" },
-  //       { content: "hello" },
-  //       { content: "dddd" },
-  //       { content: "hello", text_color: "red" },
-  //     ],
-  //     bg_color: "yellow",
-  //   }),
-  //   trial_duration: 500000,
-  // });
-
-  console.log(colorPicker({radius: 500}))
-
   timeline.push({
     type: HtmlKeyboardResponsePlugin,
-
-    stimulus: colorPicker({radius: 20}),
+    response_ends_trial: false,
+    stimulus: colorPicker({radius: 20, thickness: 30, content: "<div>inner HTML content</div>"}),
     trial_duration: 500000,
   });
 
