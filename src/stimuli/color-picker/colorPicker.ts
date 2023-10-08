@@ -1,5 +1,5 @@
 import { html } from "../utils";
-import ColorPicker from "./web-component"
+import ColorPicker from "./webComponent"
 
 
 type Props = {

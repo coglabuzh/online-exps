@@ -107,9 +107,17 @@ Examples. Preferably, every feature should be showcased in at least one example.
 - Create an example under `/examples` for more complex features, such as stimuli functions.
 
 #### Naming
-- Files and folders: e.g. `/circle-of-squares`, `circle-of-squares.ts`
-- Functions: use `camelCase`, e.g. `circleOfSquares`
-- Types: use uppercase, e.g. `Frames`
+##### Folders
+- Use lower-case and separate words by dashes “-”
+
+##### Files
+- Use camelCase for filenames, e.g., attentionCheck.ts.
+
+##### Variables
+- Try to use camelCase for variables. If not possible, you can use lower-case. 
+
+##### Functions
+- verbCamelCase or just verb
 
 #### Types
 
