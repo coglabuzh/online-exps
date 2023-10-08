@@ -18,7 +18,15 @@ export const colorPicker = (props: Props): string => {
 
   new ColorPicker();
 
-  return html`<color-picker innerHTML=${"\"" + props.content + "\"" ?? "\"<div></div>\""} thickness=${props.thickness ?? 10} radius=${props.radius ?? 10 } resultLocation=${props.resultLocation ?? "color-picker__result"} ></color-picker>`
+  return html`<color-picker
+    thickness=${props.thickness ?? 10}
+    radius=${props.radius ?? 10}
+    resultLocation=${props.resultLocation
+      ? '"' + props.resultLocation + '"'
+      : "color_picker__result"}
+  >
+    ${props.content ?? "<div></div>"}
+  </color-picker>`;
 };
 
 export default colorPicker;

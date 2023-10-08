@@ -1,3 +1,4 @@
-export { default as circleOfSquares } from './stimuli/circle-of-squares/circle-of-squares';
-export { default as colorPicker } from './stimuli/color-picker/color-picker';
-export { default as shuffle } from './utils/shuffle';
+export { default as circleOfSquares } from './stimuli/circle-of-squares/circleOfSquares';
+export { default as colorPicker } from './stimuli/color-picker/colorPicker';
+export { default as coloredGraphic } from './stimuli/colored-graphic/coloredGraphic';
+export { default as shuffle } from './utils/shuffleArray';

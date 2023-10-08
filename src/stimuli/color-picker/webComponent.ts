@@ -44,8 +44,7 @@ export default class ColorPicker extends LitElement {
 
   @property({type: Array}) position = [0,0];
 
-  @property({ type: String })
-  innerHTML: string;
+ 
   @property({ type: Number })
   radius: number;
   @property({ type: Number })
@@ -112,15 +111,25 @@ export default class ColorPicker extends LitElement {
      
     }
 
+    function rgbToHex(r: number, g: number, b: number): string {
+      const red = r.toString(16).padStart(2, "0");
+      const green = g.toString(16).padStart(2, "0");
+      const blue = b.toString(16).padStart(2, "0");
+
+      return `#${red}${green}${blue}`;
+    }
+
     canvas.addEventListener("click", (event) => {
       console.log(this.innerHTML);
       const x = event.offsetX;
       const y = event.offsetY;
       const pixel = ctx.getImageData(x, y, 1, 1).data;
       if (!(pixel[0] == 0 && pixel[1] == 0 && pixel[2] == 0)) {
-        window[this.resultLocation] = pixel;
+        window[this.resultLocation] = rgbToHex(pixel[0], pixel[1], pixel[2]);
+        const event = new CustomEvent("color_picker__result", { detail:  rgbToHex(pixel[0], pixel[1], pixel[2])});
+        window.dispatchEvent(event);
         this.selectedColor = `rgb(${pixel[0]}, ${pixel[1]}, ${pixel[2]})`;
-        this.position = [x,y];
+        this.position = [x, y];
         this.drawColorWheel();
         this.requestUpdate(); // Ask lit to re-render
       }
@@ -131,7 +140,7 @@ export default class ColorPicker extends LitElement {
     return html`
       <div><div class="container">
         <canvas width="600" height="600"></canvas>
-        <div class="inner-html">${unsafeHTML(this.innerHTML)}</div>
+        <div class="inner-html"><slot></slot></div>
         </div>
         <div class="swatch-container">selected color: <div class="color-swatch" style="${"background-color: " + this.selectedColor}"></div></div>
       </div>
