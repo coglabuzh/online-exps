@@ -9,10 +9,9 @@
 // You can import stylesheets (.scss or .css).
 import "../styles/main.scss";
 
-// import { circleOfSquares } from "../../../src/stimuli/circle_of_squares/circle_of_squares";
 
-import {circleOfSquares, coloredGraphic, colorPickerRange} from '@coglabuzh/webpsy.js'
-
+import {circleOfSquares, coloredGraphic, colorPickerRange, colorPicker} from '@coglabuzh/webpsy.js'
+import { BaseTrialData, HtmlKeyboardResponseTrialData } from "@coglabuzh/webpsy.js";
 import FullscreenPlugin from "@jspsych/plugin-fullscreen";
 import HtmlKeyboardResponsePlugin from "@jspsych/plugin-html-keyboard-response";
 import PreloadPlugin from "@jspsych/plugin-preload";
@@ -24,18 +23,7 @@ import { initJsPsych } from "jspsych";
  * @type {import("jspsych-builder").RunFunction}
  */
 
-type BaseTrialData = {
-  trial_type: string,
-  trial_index: number,
-  time_elaped: number,
-  internal_node_id: string
-}
 
-type KeyboardTrialData = BaseTrialData & {
-  response: string,
-  rt: number,
-  stimulus: string
-}
 
 
 export async function run({
@@ -62,30 +50,25 @@ export async function run({
     type: HtmlKeyboardResponsePlugin,
     // response_ends_trial: false,
     stimulus: colorPickerRange({
-      radius: 20,
+      radius: 200,
       thickness: 30,
       content: coloredGraphic({
         graphic: "assets/image.svg",
         color: "#19C1BE",
         width: 200,
         height: 200,
-        // listenLocation: "color_picker__result",
+        listenLocation: "color_picker_range__result_end",
       }),
     }),
     trial_duration: 500000,
-    on_finish: (data: KeyboardTrialData) => {
+    on_finish: (data: HtmlKeyboardResponseTrialData) => {
       // console.log(window.color_picker__result)
+
       console.log(data);
     },
   });
 
 
-  // coloredGraphic({
-  //     graphic: "assets/image.svg",
-  //     color: "#19C1BE",
-  //     width: 200,
-  //     height: 200,
-  //   }),}),
   
 
   await jsPsych.run(timeline);

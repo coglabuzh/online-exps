@@ -1,33 +1,32 @@
 import { LitElement, html, css } from "lit";
 import { customElement, property } from "lit/decorators.js";
-import { unsafeHTML } from "lit/directives/unsafe-html.js";
+import { convertDegreeToRadian, convertRgbToHex } from "../utils";
 
 @customElement("color-picker-range")
 export default class ColorPickerRange extends LitElement {
   static styles = css`
     canvas {
       cursor: crosshair;
-      z-index:  20
+      z-index: 20;
     }
-    .container{
+    .container {
       position: relative;
-       display: flex; /* Use flexbox to center the child */
-  justify-content: center; /* Center horizontally */
-  align-items: center; /* Center vertically */
-
+      display: flex; /* Use flexbox to center the child */
+      justify-content: center; /* Center horizontally */
+      align-items: center; /* Center vertically */
     }
-    .inner-html{
+    .inner-html {
       position: absolute;
       top: auto;
       bottom: auto;
       left: 0px;
-      right: 0px
+      right: 0px;
     }
-    .color-swatch{
+    .color-swatch {
       height: 30px;
       width: 30px;
     }
-    .swatch-container{
+    .swatch-container {
       display: flex;
       flex-direction: row;
       justify-content: center;
@@ -39,8 +38,8 @@ export default class ColorPickerRange extends LitElement {
   @property({ type: String }) selectedColorStart = "#FFFFFF";
   @property({ type: String }) selectedColorEnd = "#FFFFFF";
 
-  @property({type: Array}) positionStart = [0,0];
-  @property({type: Array}) positionEnd = [0,0];
+  @property({ type: Array }) positionStart = [0, 0];
+  @property({ type: Array }) positionEnd = [0, 0];
 
   @property({ type: Boolean }) isStartSelected = false;
   @property({ type: Boolean }) isEndSelected = false;
@@ -49,8 +48,10 @@ export default class ColorPickerRange extends LitElement {
   radius: number;
   @property({ type: Number })
   thickness: number;
-  @property({ type: String })
-  resultLocation: string;
+
+  startLocation = "color_picker_range__result_start";
+  endLocation = "color_picker_range__result_end";
+
 
   firstUpdated() {
     this.drawColorWheel();
@@ -66,83 +67,128 @@ export default class ColorPickerRange extends LitElement {
 
     const WIDTH = 600;
     const HEIGHT = 600;
-    const SCALE = 6;
+
     const MIDDLE_X = WIDTH / 2;
     const MIDDLE_Y = HEIGHT / 2;
 
-    const LIGHTNESS = 0.9;
 
-    function degreeToRadian(deg) {
-      return (deg * Math.PI) / 180;
-    }
+
+    
 
     if (!ctx) throw new Error("Context not found, please call setContext().");
 
     // A circle has 360 degrees, corresponding to all possible hue values (0 - 360)
     for (let h = 0; h <= 360; h++) {
-      let s = 30;
+      let s = this.radius
       ctx.beginPath();
       ctx.strokeStyle = `hsl(${h}, 100%, 60%)`;
-      const posX = MIDDLE_X + Math.cos(degreeToRadian(h)) * s * SCALE;
-      const posY = MIDDLE_Y - Math.sin(degreeToRadian(h)) * s * SCALE;
-      ctx.arc(posX, posY, this.radius, 0, 2 * Math.PI);
+      const posX = MIDDLE_X + Math.cos(convertDegreeToRadian(h)) * s;
+      const posY = MIDDLE_Y - Math.sin(convertDegreeToRadian(h)) * s;
+      ctx.arc(posX, posY, this.thickness, 0, 2 * Math.PI);
       ctx.lineWidth = this.thickness;
       ctx.lineCap = "square";
       ctx.stroke();
-      ctx.closePath()
-      if(!(this.positionStart[0] == 0 && this.positionStart[1] == 0)){
+      ctx.closePath();
+      if (!(this.positionStart[0] == 0 && this.positionStart[1] == 0)) {
         ctx.beginPath();
-        ctx.arc(this.positionStart[0], this.positionStart[1], 10, 0, 2 * Math.PI);
-        ctx.strokeStyle = 'black';
-        ctx.fill()
+
+        // show circle
+        ctx.arc(
+          this.positionStart[0],
+          this.positionStart[1],
+          5,
+          0,
+          2 * Math.PI
+        );
+
+        // show line
+        const dx = this.positionStart[0] - MIDDLE_X;
+        const dy = this.positionStart[1] - MIDDLE_Y;
+        const theta = Math.atan2(dy, dx);
+
+        ctx.moveTo(
+          MIDDLE_X + Math.cos(theta) * (s - this.thickness),
+          MIDDLE_Y + Math.sin(theta) * (s - this.thickness)
+        );
+        ctx.lineTo(
+          MIDDLE_X + Math.cos(theta) * (s + this.thickness),
+          MIDDLE_Y + Math.sin(theta) * (s + this.thickness)
+        );
+
+        ctx.strokeStyle = "black";
+        ctx.fill();
         ctx.lineWidth = 1;
         ctx.stroke();
         ctx.closePath();
       }
-      if(!(this.positionEnd[0] == 0 && this.positionEnd[1] == 0) && this.isEndSelected){
+      if (
+        !(this.positionEnd[0] == 0 && this.positionEnd[1] == 0) &&
+        this.isEndSelected
+      ) {
         ctx.beginPath();
-        ctx.arc(this.positionEnd[0], this.positionEnd[1], 10, 0, 2 * Math.PI);
-        ctx.strokeStyle = 'black';
-        ctx.fill()
+
+        // show circle
+        ctx.arc(this.positionEnd[0], this.positionEnd[1], 5, 0, 2 * Math.PI);
+
+
+        // show line
+        const dx = this.positionEnd[0] - MIDDLE_X;
+        const dy = this.positionEnd[1] - MIDDLE_Y;
+        const theta = Math.atan2(dy, dx);
+
+        ctx.moveTo(
+          MIDDLE_X + Math.cos(theta) * (s - this.thickness),
+          MIDDLE_Y + Math.sin(theta) * (s - this.thickness)
+        );
+        ctx.lineTo(
+          MIDDLE_X + Math.cos(theta) * (s + this.thickness),
+          MIDDLE_Y + Math.sin(theta) * (s + this.thickness)
+        );
+
+        ctx.strokeStyle = "black";
+        ctx.fill();
         ctx.lineWidth = 1;
         ctx.stroke();
         ctx.closePath();
       }
     }
 
-    function rgbToHex(r: number, g: number, b: number): string {
-      const red = r.toString(16).padStart(2, "0");
-      const green = g.toString(16).padStart(2, "0");
-      const blue = b.toString(16).padStart(2, "0");
-
-      return `#${red}${green}${blue}`;
-    }
+    
 
     canvas.addEventListener("click", (event) => {
-      console.log("RANGE")
+      console.log("RANGE");
       const x = event.offsetX;
       const y = event.offsetY;
       const pixel = ctx.getImageData(x, y, 1, 1).data;
       if (!(pixel[0] == 0 && pixel[1] == 0 && pixel[2] == 0)) {
-        const color = rgbToHex(pixel[0], pixel[1], pixel[2]);
+        const color = convertRgbToHex(pixel[0], pixel[1], pixel[2]);
         if (!this.isStartSelected) {
-          this.selectedColorStart = `rgb(${pixel[0]}, ${pixel[1]}, ${pixel[2]})`;
+          this.selectedColorStart = color;
           this.positionStart = [x, y];
           this.isStartSelected = true;
           this.isEndSelected = false;
         } else {
-          this.selectedColorEnd = `rgb(${pixel[0]}, ${pixel[1]}, ${pixel[2]})`;
+          this.selectedColorEnd = color;
           this.positionEnd = [x, y];
           this.isStartSelected = false;
-          window[this.resultLocation] = [this.selectedColorStart, this.selectedColorEnd];
-          const eventStart = new CustomEvent("color_picker__result_start", { detail:  this.selectedColorStart});
-          const eventEnd = new CustomEvent("color_picker__result_end", { detail:  this.selectedColorEnd});
+
+
+
+          // write to window object
+          window[this.startLocation] = this.selectedColorStart;
+          window[this.endLocation] = this.selectedColorEnd;
+
+          // send events when colors change
+          const eventStart = new CustomEvent(this.startLocation, {
+            detail: this.selectedColorStart,
+          });
+          const eventEnd = new CustomEvent(this.endLocation, {
+            detail: this.selectedColorEnd,
+          });
           window.dispatchEvent(eventStart);
           window.dispatchEvent(eventEnd);
-          console.log("COLOR START:")
-          console.log(this.selectedColorStart)
-          console.log("COLOR END:")
-          console.log(this.selectedColorEnd)
+
+       
           this.isEndSelected = true;
         }
         this.drawColorWheel();
@@ -153,11 +199,23 @@ export default class ColorPickerRange extends LitElement {
 
   render() {
     return html`
-      <div><div class="container">
-        <canvas width="600" height="600"></canvas>
-        <div class="inner-html"><slot></slot></div>
+      <div>
+        <div class="container">
+          <canvas width="600" height="600"></canvas>
+          <div class="inner-html"><slot></slot></div>
         </div>
-        <div class="swatch-container">selected color range: <div class="color-swatch" style="${"background-color: " + this.selectedColorStart}"></div> to <div class="color-swatch" style="${"background-color: " + this.selectedColorEnd}"></div></div>
+        <div class="swatch-container">
+          selected color range:
+          <div
+            class="color-swatch"
+            style="${"background-color: " + this.selectedColorStart}"
+          ></div>
+          to
+          <div
+            class="color-swatch"
+            style="${"background-color: " + this.selectedColorEnd}"
+          ></div>
+        </div>
       </div>
     `;
   }

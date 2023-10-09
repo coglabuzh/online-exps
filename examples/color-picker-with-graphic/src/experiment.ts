@@ -11,7 +11,9 @@ import "../styles/main.scss";
 
 // import { circleOfSquares } from "../../../src/stimuli/circle_of_squares/circle_of_squares";
 
-import {circleOfSquares,  colorPicker, coloredGraphic} from '@coglabuzh/webpsy.js'
+import {colorPicker, coloredGraphic} from '@coglabuzh/webpsy.js'
+
+import { BaseTrialData, HtmlKeyboardResponseTrialData } from "@coglabuzh/webpsy.js";
 
 import FullscreenPlugin from "@jspsych/plugin-fullscreen";
 import HtmlKeyboardResponsePlugin from "@jspsych/plugin-html-keyboard-response";
@@ -24,18 +26,7 @@ import { initJsPsych } from "jspsych";
  * @type {import("jspsych-builder").RunFunction}
  */
 
-type BaseTrialData = {
-  trial_type: string,
-  trial_index: number,
-  time_elaped: number,
-  internal_node_id: string
-}
 
-type KeyboardTrialData = BaseTrialData & {
-  response: string,
-  rt: number,
-  stimulus: string
-}
 
 
 export async function run({
@@ -60,51 +51,28 @@ export async function run({
   timeline.push({
     type: HtmlKeyboardResponsePlugin,
     // response_ends_trial: false,
-    stimulus: colorPicker({radius: 20, thickness: 30, content: 
+    stimulus: colorPicker({radius: 200, thickness: 10, content: 
     
     coloredGraphic({
       graphic: "assets/image.svg",
-      color: "#19C1BE",
+      color: "#12C13E",
       width: 200,
       height: 200,
       listenLocation: "color_picker__result"
     })
     }),
     trial_duration: 500000,
-    on_finish: (data: KeyboardTrialData ) => {
-      // console.log(window.color_picker__result)
-      console.log(data)
+    on_finish: (data: HtmlKeyboardResponseTrialData ) => {
+
+      const result_data = { ...data, color: window["color_picker__result"] };
+
+      console.log(result_data.color)
+
     }
   });
 
-  timeline.push({
-    type: HtmlKeyboardResponsePlugin,
-    // response_ends_trial: false,
-    stimulus: colorPicker({
-      radius: 20,
-      thickness: 30,
-      content: coloredGraphic({
-        graphic: "assets/image.svg",
-        color: "#19C1BE",
-        width: 200,
-        height: 200,
-        listenLocation: "color_picker__result",
-      }),
-    }),
-    trial_duration: 500000,
-    on_finish: (data: KeyboardTrialData) => {
-      // console.log(window.color_picker__result)
-      console.log(data);
-    },
-  });
+  
 
-
-  // coloredGraphic({
-  //     graphic: "assets/image.svg",
-  //     color: "#19C1BE",
-  //     width: 200,
-  //     height: 200,
-  //   }),}),
   
 
   await jsPsych.run(timeline);

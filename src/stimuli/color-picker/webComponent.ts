@@ -1,6 +1,6 @@
 import { LitElement, html, css } from "lit";
 import { customElement, property } from "lit/decorators.js";
-import { unsafeHTML } from "lit/directives/unsafe-html.js";
+import { convertDegreeToRadian, convertRgbToHex } from "../utils";
 
 
 @customElement("color-picker")
@@ -49,8 +49,9 @@ export default class ColorPicker extends LitElement {
   radius: number;
   @property({ type: Number })
   thickness: number;
-  @property({ type: String })
-  resultLocation: string;
+
+
+  resultLocation =  "color_picker__result"
 
   firstUpdated() {
     this.drawColorWheel();
@@ -68,22 +69,20 @@ export default class ColorPicker extends LitElement {
 
     const WIDTH = 600;
     const HEIGHT = 600;
-    const SCALE = 6;
+
     const MIDDLE_X = WIDTH / 2;
     const MIDDLE_Y = HEIGHT / 2;
 
-    const LIGHTNESS = 0.9;
 
-    function degreeToRadian(deg) {
-      return (deg * Math.PI) / 180;
-    }
+
+   
 
     if (!ctx) throw new Error("Context not found, please call setContext().");
 
     // A circle has 360 degrees, corresponding to all possible hue values (0 - 360)
     for (let h = 0; h <= 360; h++) {
       // The color's saturation is expressed as a percentage (0 - 100)
-      let s = 30;
+      let s = this.radius;
       ctx.beginPath();
       ctx.strokeStyle = `hsl(${h}, 100%, 60%)`;
       // To calculate the position of the color on the wheel we use the sine and cosine as explained on
@@ -91,11 +90,11 @@ export default class ColorPicker extends LitElement {
       // Low saturation colors are drawn close to the center of the wheel while high saturation colors are drawn further
       // away. The whole wheel is scaled to make the diameter bigger than 200 pixels (1 pixel per 1% saturation as the
       // radius).
-      const posX = MIDDLE_X + Math.cos(degreeToRadian(h)) * s * SCALE;
-      const posY = MIDDLE_Y - Math.sin(degreeToRadian(h)) * s * SCALE;
+      const posX = MIDDLE_X + Math.cos(convertDegreeToRadian(h)) * s;
+      const posY = MIDDLE_Y - Math.sin(convertDegreeToRadian(h)) * s;
       // At that position we draw a little dot that gets bigger the further away from the center it lies (scales with s).
       // We draw a full circle from 0 to 360 degrees which is the same as 0 to 2π radians.
-      ctx.arc(posX, posY, this.radius, 0, 2 * Math.PI);
+      ctx.arc(posX, posY, this.thickness, 0, 2 * Math.PI);
       ctx.lineWidth = this.thickness;
       ctx.lineCap = "square";
       ctx.stroke();
@@ -111,13 +110,7 @@ export default class ColorPicker extends LitElement {
      
     }
 
-    function rgbToHex(r: number, g: number, b: number): string {
-      const red = r.toString(16).padStart(2, "0");
-      const green = g.toString(16).padStart(2, "0");
-      const blue = b.toString(16).padStart(2, "0");
-
-      return `#${red}${green}${blue}`;
-    }
+   
 
     canvas.addEventListener("click", (event) => {
       console.log(this.innerHTML);
@@ -125,8 +118,8 @@ export default class ColorPicker extends LitElement {
       const y = event.offsetY;
       const pixel = ctx.getImageData(x, y, 1, 1).data;
       if (!(pixel[0] == 0 && pixel[1] == 0 && pixel[2] == 0)) {
-        window[this.resultLocation] = rgbToHex(pixel[0], pixel[1], pixel[2]);
-        const event = new CustomEvent("color_picker__result", { detail:  rgbToHex(pixel[0], pixel[1], pixel[2])});
+        window[this.resultLocation] = convertRgbToHex(pixel[0], pixel[1], pixel[2]);
+        const event = new CustomEvent(this.resultLocation, { detail:  convertRgbToHex(pixel[0], pixel[1], pixel[2])});
         window.dispatchEvent(event);
         this.selectedColor = `rgb(${pixel[0]}, ${pixel[1]}, ${pixel[2]})`;
         this.position = [x, y];

@@ -9,11 +9,13 @@ type Props = {
   radius?: number;
   /** Thickness of color wheel */
   thickness?: number;
-  /** Which attribute of the window object should the result (color as HTML color code) be written in? */
-  resultLocation?: string;
 };
 
-
+/**
+ * Displays a color wheel where the user can select a certain color.
+ * Start of range is stored in window.color_picker__result
+ * @returns string of html source code
+ */
 export const colorPicker = (props: Props): string => {
 
   new ColorPicker();
@@ -21,9 +23,7 @@ export const colorPicker = (props: Props): string => {
   return html`<color-picker
     thickness=${props.thickness ?? 10}
     radius=${props.radius ?? 10}
-    resultLocation=${props.resultLocation
-      ? '"' + props.resultLocation + '"'
-      : "color_picker__result"}
+
   >
     ${props.content ?? "<div></div>"}
   </color-picker>`;

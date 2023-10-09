@@ -29,7 +29,7 @@ export const coloredGraphic = (props: Props): string => {
   return html`
     <colored-graphic
       graphic=${'"' + props.graphic + '"'}
-      color=${'"' + "#F6F6F6" + '"'}
+      color=${props.color}
       width=${props.width}
       height=${props.height}
       listenLocation=${props.listenLocation
