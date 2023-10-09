@@ -11,11 +11,10 @@ import "../styles/main.scss";
 
 // import { circleOfSquares } from "../../../src/stimuli/circle_of_squares/circle_of_squares";
 
-import {colorPicker, coloredGraphic} from '@coglabuzh/webpsy.js'
+import { colorPicker, coloredGraphic } from "@coglabuzh/webpsy.js";
 
-import { BaseTrialData, HtmlKeyboardResponseTrialData } from "@coglabuzh/webpsy.js";
+import { HtmlKeyboardResponseTrialData } from "@coglabuzh/webpsy.js";
 
-import FullscreenPlugin from "@jspsych/plugin-fullscreen";
 import HtmlKeyboardResponsePlugin from "@jspsych/plugin-html-keyboard-response";
 import PreloadPlugin from "@jspsych/plugin-preload";
 import { initJsPsych } from "jspsych";
@@ -25,9 +24,6 @@ import { initJsPsych } from "jspsych";
  *
  * @type {import("jspsych-builder").RunFunction}
  */
-
-
-
 
 export async function run({
   assetPaths,
@@ -50,30 +46,39 @@ export async function run({
 
   timeline.push({
     type: HtmlKeyboardResponsePlugin,
-    // response_ends_trial: false,
-    stimulus: colorPicker({radius: 200, thickness: 10, content: 
-    
-    coloredGraphic({
-      graphic: "assets/image.svg",
-      color: "#12C13E",
-      width: 200,
-      height: 200,
-      listenLocation: "color_picker__result"
-    })
+
+    stimulus: coloredGraphic({
+        graphic: "assets/image.svg",
+        color: "#FCFF33",
+        width: 200,
+        height: 200,
     }),
+    prompt: "Remember the color of the house. Press any key if you are ready.",
     trial_duration: 500000,
-    on_finish: (data: HtmlKeyboardResponseTrialData ) => {
-
-      const result_data = { ...data, color: window["color_picker__result"] };
-
-      console.log(result_data.color)
-
-    }
   });
 
-  
+  timeline.push({
+    type: HtmlKeyboardResponsePlugin,
 
-  
+    stimulus: colorPicker({
+      radius: 200,
+      thickness: 10,
+      content: coloredGraphic({
+        graphic: "assets/image.svg",
+        color: "#F9F9F9",
+        width: 200,
+        height: 200,
+        listenLocation: "color_picker__result",
+      }),
+    }),
+    prompt: "Select the color closest to the color of the house.",
+    trial_duration: 500000,
+    on_finish: (data: HtmlKeyboardResponseTrialData) => {
+      const result_data = { ...data, color: window["color_picker__result"] };
+
+      console.log(result_data.color);
+    },
+  });
 
   await jsPsych.run(timeline);
 

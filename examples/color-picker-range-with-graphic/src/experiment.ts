@@ -10,9 +10,9 @@
 import "../styles/main.scss";
 
 
-import {circleOfSquares, coloredGraphic, colorPickerRange, colorPicker} from '@coglabuzh/webpsy.js'
-import { BaseTrialData, HtmlKeyboardResponseTrialData } from "@coglabuzh/webpsy.js";
-import FullscreenPlugin from "@jspsych/plugin-fullscreen";
+import { coloredGraphic, colorPickerRange } from '@coglabuzh/webpsy.js';
+import { HtmlKeyboardResponseTrialData } from "@coglabuzh/webpsy.js";
+
 import HtmlKeyboardResponsePlugin from "@jspsych/plugin-html-keyboard-response";
 import PreloadPlugin from "@jspsych/plugin-preload";
 import { initJsPsych } from "jspsych";
