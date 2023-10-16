@@ -1,4 +1,4 @@
-import chooseNElementsFromArray from '../../src/utils/choose_n_elements_from_arr'
+import chooseNElementsFromArray from '../../src/basic-fun/chooseNElementsFromArray'
 
 
 describe("chooseNElementsFromArray", () => {

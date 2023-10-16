@@ -1,4 +1,4 @@
-import shuffle from "../../src/utils/shuffle"
+import shuffle from "../../src/basic-fun/shuffleArray"
 
 describe("shuffle", () => {
   it("should not mutate the original array", () => {
