@@ -26,6 +26,6 @@ export type HtmlButtonResponseTrialData = BaseTrialData & {
   margin_vertical: string;
   margin_horizontal: string;
   response_ends_trial: boolean;
-  response: string;
+  response: number;
   rt: number;
 };

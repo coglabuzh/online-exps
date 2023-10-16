@@ -18,6 +18,7 @@ import { HtmlKeyboardResponseTrialData } from "@coglabuzh/webpsy.js";
 import HtmlKeyboardResponsePlugin from "@jspsych/plugin-html-keyboard-response";
 import PreloadPlugin from "@jspsych/plugin-preload";
 import { initJsPsych } from "jspsych";
+import { createNewTrial } from "./trials/trialProcess";
 
 /**
  * This function will be executed by jsPsych Builder and is expected to run the jsPsych experiment
@@ -44,42 +45,7 @@ export async function run({
     video: assetPaths.video,
   });
 
-  timeline.push({
-    type: HtmlKeyboardResponsePlugin,
-
-    stimulus: coloredGraphic({
-        graphic: "assets/image.svg",
-        color: "#FCFF33",
-        width: 200,
-        height: 200,
-    }),
-    prompt: "Remember the color of the house. Press any key if you are ready.",
-    trial_duration: 500000,
-  });
-
-  timeline.push({
-    type: HtmlKeyboardResponsePlugin,
-
-    stimulus: colorPicker({
-      radius: 200,
-      thickness: 10,
-      content: coloredGraphic({
-        graphic: "assets/image.svg",
-        color: "#F9F9F9",
-        width: 200,
-        height: 200,
-        listenLocation: "color_picker__result",
-      }),
-    }),
-    prompt: "Select the color closest to the color of the house.",
-    trial_duration: 500000,
-    on_finish: (data: HtmlKeyboardResponseTrialData) => {
-      console.log(window["color_picker__result"]);
-      const result_data = { ...data, color: window["color_picker__result"] };
-
-      console.log(result_data.color);
-    },
-  });
+  timeline.push(...createNewTrial())
 
   await jsPsych.run(timeline);
 
