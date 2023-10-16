@@ -1,2 +1,0 @@
-Shows a color wheel. The user can click on a location inside the color wheel, the resulting color will be written to an attribute of the window object.
-This uses a web component for tracking the state (i.e. color and position user clicked) and drawing the color wheel but the library user will never need to interact with it directly.

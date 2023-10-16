@@ -42,8 +42,6 @@ type Props = {
   /** Radius of the circle */
   radius?: number;
 
-  /** Which attribute of the window object should the result (the 0-indexed frame number) be written in? */
-  resultLocation?: string;
 };
 
 /**
@@ -61,10 +59,10 @@ export const circleOfSquares = (props: Props): string => {
   let markup = html`<div
     style="position: relative; width: 400px; height: 400px;"
   ></div>`;
-  const defaultLocation = 'circle-of-squares__result'
+  const defaultLocation = 'circle_of_squares__result'
 
   for (let i = 0; i < n; i++) {
-    const response_function = `window['${props.resultLocation ?? defaultLocation}'] = ${i}`
+    const response_function = `window['${defaultLocation}'] = ${i}`
     // Calculate the (x, y) coordinates of the current screen element.
     const offsetX = Math.sin(theta * (-2 - i)) * radius;
     const offsetY = Math.cos(theta * (-2 - i)) * radius;

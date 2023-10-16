@@ -71,9 +71,11 @@ export async function run({
         listenLocation: "color_picker__result",
       }),
     }),
+    response_ends_trial: false,
     prompt: "Select the color closest to the color of the house.",
     trial_duration: 500000,
     on_finish: (data: HtmlKeyboardResponseTrialData) => {
+      console.log(window["color_picker__result"]);
       const result_data = { ...data, color: window["color_picker__result"] };
 
       console.log(result_data.color);
