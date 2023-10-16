@@ -9,11 +9,10 @@
 // You can import stylesheets (.scss or .css).
 import "../styles/main.scss";
 
-// import { circleOfSquares } from "../../../src/stimuli/circle_of_squares/circle_of_squares";
 
-import {circleOfSquares} from '@coglabuzh/webpsy.js'
+import { coloredGraphic, colorPickerRange } from '@coglabuzh/webpsy.js';
+import { HtmlKeyboardResponseTrialData } from "@coglabuzh/webpsy.js";
 
-import FullscreenPlugin from "@jspsych/plugin-fullscreen";
 import HtmlKeyboardResponsePlugin from "@jspsych/plugin-html-keyboard-response";
 import PreloadPlugin from "@jspsych/plugin-preload";
 import { initJsPsych } from "jspsych";
@@ -23,6 +22,10 @@ import { initJsPsych } from "jspsych";
  *
  * @type {import("jspsych-builder").RunFunction}
  */
+
+
+
+
 export async function run({
   assetPaths,
   input = {},
@@ -42,32 +45,31 @@ export async function run({
     video: assetPaths.video,
   });
 
-  // Welcome screen
-
-  // timeline.push({
-  //   type: HtmlKeyboardResponsePlugin,
-
-  //   stimulus: `<circle-of-squares .frames="${[{ content: "s" }, { content: "a" }, { content: "a" }, { content: "b" }, { content: "c" }, { content: "hello" }, { content: "dddd" }, { content: "hello", text_color: "red" },]}" .onFrameClick="${(i) => console.log('Frame ' + i + ' clicked')}"></circle-of-squares>`,
-  //   trial_duration: 500000
-  // });
-
+  
   timeline.push({
     type: HtmlKeyboardResponsePlugin,
-
-    stimulus: circleOfSquares({
-      frames: [
-        { content: "a" },
-        { content: "b" },
-        { content: "b" },
-        { content: "c" },
-        { content: "hello" },
-        { content: "dddd" },
-        { content: "hello", text_color: "red" },
-      ],
-      bg_color: "yellow",
+    // response_ends_trial: false,
+    stimulus: colorPickerRange({
+      radius: 200,
+      thickness: 30,
+      content: coloredGraphic({
+        graphic: "assets/image.svg",
+        color: "#19C1BE",
+        width: 200,
+        height: 200,
+        listenLocation: "color_picker_range__result_end",
+      }),
     }),
     trial_duration: 500000,
+    on_finish: (data: HtmlKeyboardResponseTrialData) => {
+      // console.log(window.color_picker__result)
+
+      console.log(data);
+    },
   });
+
+
+  
 
   await jsPsych.run(timeline);
 

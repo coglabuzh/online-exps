@@ -41,6 +41,7 @@ type Props = {
 
   /** Radius of the circle */
   radius?: number;
+
 };
 
 /**
@@ -58,8 +59,10 @@ export const circleOfSquares = (props: Props): string => {
   let markup = html`<div
     style="position: relative; width: 400px; height: 400px;"
   ></div>`;
+  const defaultLocation = 'circle_of_squares__result'
 
   for (let i = 0; i < n; i++) {
+    const response_function = `window['${defaultLocation}'] = ${i}`
     // Calculate the (x, y) coordinates of the current screen element.
     const offsetX = Math.sin(theta * (-2 - i)) * radius;
     const offsetY = Math.cos(theta * (-2 - i)) * radius;
@@ -71,16 +74,20 @@ export const circleOfSquares = (props: Props): string => {
 			left: 50%; 
 			width: 100px; 
 			height: 100px; 
-			border: 4px solid ${frames[i].border_color ?? "black"}; 
+			border: 4px solid ${frames[i].border_color ?? props.border_color ??  "black"}; 
 			color: ${frames[i].text_color ?? "black"}; 
-			background-color: ${frames[i].bg_color ?? "white"}; 
+			background-color: ${frames[i].bg_color ?? props.bg_color ??  "white"}; 
 			display: flex; 
 			justify-content: center; 
 			align-items: center; 
 			transform: translate(${offsetX}px, ${offsetY}px); 
+      cursor: pointer;
 			${props.custom_css ?? ""}
 			${frames[i].custom_css ?? ""}
 			"
+
+      onclick="${response_function}"
+
       >
         ${frames[i].content}
       </div>
