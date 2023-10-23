@@ -1,8 +1,8 @@
 // Third party plugins
 import Swal from "sweetalert2";
 
-// Global variables
-import { jsPsych } from "../jsp";
+// JsPsych type
+import { JsPsych } from "jspsych";
 
 
 interface blurObject {
@@ -21,7 +21,7 @@ interface blurObject {
  * @param {string} code A string that is used to redirect the participant to the Prolific website.
  * @param alert A boolean value.
  */
-export function trackInteractions(blur: blurObject, alert = true) {
+export function trackInteractions(blur: blurObject, alert = true, jsPsych: JsPsych) {
   // get the last interaction event
   let interactionData = JSON.parse(jsPsych.data.getInteractionData().json());
   let lastEvent = interactionData[interactionData.length - 1];

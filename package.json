@@ -21,6 +21,9 @@
     "webpack-cli": "^5.1.4"
   },
   "dependencies": {
-    "lit": "^2.8.0"
+    "@coglabuzh/webpsy.js": "^1.1.0",
+    "jspsych": "^7.3.3",
+    "lit": "^2.8.0",
+    "sweetalert2": "^11.7.32"
   }
 }

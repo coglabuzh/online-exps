@@ -18,8 +18,8 @@ import { random } from "./random"
 // Third party plugins
 import Swal from "sweetalert2";
 
-// Global variables
-import { jsPsych } from "../jsp";
+// JsPsych type
+import {JsPsych} from "jspsych"
 
 
 /**
@@ -32,7 +32,7 @@ import { jsPsych } from "../jsp";
  * @param maxSubjectNumber 
  * @returns 
  */
-export function initBatchSession(conditionList:any[], maxSubjectNumber:number) {
+export function initBatchSession(conditionList:any[], maxSubjectNumber:number, jsPsych: JsPsych) {
 
 	//@ts-ignore get the batch session data
 	let batchSessionData = jatos.batchSession.getAll();
