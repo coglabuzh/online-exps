@@ -1,24 +1,35 @@
+import { JsPsych } from "jspsych";
 
 interface switchObject {
   RUN_TIMER: boolean;
 }
-
 
 /**
  *
  * @param duration the duration of the countdown timer in seconds
  * @param displayElementId the ID of the HTML element where you want to display the timer
  */
-export function countDownTimer(timeSwitch: switchObject, duration: number, displayElementId) {
-  
+export function countDownTimer(
+  duration: number,
+  displayElementId,
+  jsPsych: JsPsych
+) {
   // allow to run timer
-  timeSwitch.RUN_TIMER = true;
+  window["run_timer"] = true;
+
+  const previous_on_finish_function = jsPsych.getCurrentTrial().on_finish;
+
+  // set window["run_timer"] to false at the end of the experiment so the timer stops
+  jsPsych.getCurrentTrial().on_finish = () => {
+    // execute original on_finish function first, then set false
+    previous_on_finish_function(), (window["run_timer"] = false);
+  };
 
   var timer: number = parseInt(String(duration), 10); // Parse duration as an integer
   var minutes, seconds;
 
   var intervalId = setInterval(function () {
-    if (!timeSwitch.RUN_TIMER) {
+    if (!window["run_timer"]) {
       // Check the global variable to see if the timer should be stopped
       clearInterval(intervalId);
       return;
