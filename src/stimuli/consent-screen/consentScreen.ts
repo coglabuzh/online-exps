@@ -1,7 +1,7 @@
 import { html } from "../utils";
 
 /**
- * Properties set here apply for all Frames, can be overwritten by properties in the frames array.
+ * Properties set here are inserted at the right positions in the HTML code of the consent screen.
  */
 type Props = {
   /** Title of experiment */
@@ -15,7 +15,7 @@ type Props = {
 };
 
 /**
- * Display squares laid out in a circle.
+ * Displays consent screen.
  * @returns string of html source code
  */
 export const consentScreen = (props: Props): string => {
