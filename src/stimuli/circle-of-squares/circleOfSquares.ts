@@ -16,6 +16,12 @@ type Frame = {
   /** Text color inside the frame */
   text_color?: string;
 
+  /** Width of the frame in px */
+  width?: number;
+
+  /** Height of the frame in px */
+  height?: number;
+
   /** Custom CSS for the frame (file issue if frequently needed) */
   custom_css?: string;
 };
@@ -36,12 +42,17 @@ type Props = {
   /** Text color inside the props */
   text_color?: string;
 
+  /** Width of the frame in px */
+  width?: number;
+
+  /** Height of the frame in px */
+  height?: number;
+
   /** Custom CSS for the props (file issue if frequently needed) */
   custom_css?: string;
 
   /** Radius of the circle */
   radius?: number;
-
 };
 
 /**
@@ -57,37 +68,37 @@ export const circleOfSquares = (props: Props): string => {
   const radius = props.radius ?? 200;
 
   let markup = html`<div
-    style="position: relative; width: 400px; height: 400px;"
+    style="position: relative; width: 100%; height: 100%"
   ></div>`;
   const defaultLocation = 'circle_of_squares__result'
 
   for (let i = 0; i < n; i++) {
     const response_function = `window['${defaultLocation}'] = ${i}`
     // Calculate the (x, y) coordinates of the current screen element.
-    const offsetX = Math.sin(theta * (-2 - i)) * radius;
-    const offsetY = Math.cos(theta * (-2 - i)) * radius;
+    const offsetX = (Math.sin(theta * (-2 - i)) * radius) -  (frames[i].width ?? props.width ?? 100)/2;
+    const offsetY =
+      Math.cos(theta * (-2 - i)) * radius -
+      (frames[i].height ?? props.height ?? 100)/2;
     markup += html`
       <div
         style="
 			position: absolute;
 			top: 50%; 
 			left: 50%; 
-			width: 100px; 
-			height: 100px; 
-			border: 4px solid ${frames[i].border_color ?? props.border_color ??  "black"}; 
+			width: ${frames[i].width ?? props.width ?? 100}px; 
+			height: ${frames[i].height ?? props.height ?? 100}px; 
+			border: 4px solid ${frames[i].border_color ?? props.border_color ?? "black"}; 
 			color: ${frames[i].text_color ?? "black"}; 
-			background-color: ${frames[i].bg_color ?? props.bg_color ??  "white"}; 
+			background-color: ${frames[i].bg_color ?? props.bg_color ?? "white"}; 
 			display: flex; 
 			justify-content: center; 
 			align-items: center; 
-			transform: translate(${offsetX}px, ${offsetY}px); 
+			transform: translate(${offsetX}px, ${offsetY}px);
       cursor: pointer;
-			${props.custom_css ?? ""}
+			${props.custom_css ?? ""};
 			${frames[i].custom_css ?? ""}
 			"
-
-      onclick="${response_function}"
-
+        onclick="${response_function}"
       >
         ${frames[i].content}
       </div>

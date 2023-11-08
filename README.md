@@ -9,6 +9,14 @@ Whether you're a curious psychologist, a dedicated researcher, or a tech-savvy c
 
 Contributions and feedback are welcome; have a look at `CONTRIBUTING.md` for more information.
 
+## How to use
+
+First, create an experiment. The best way to do this is to clone the coglabuzh/jspsych-template repository, as it provides a good starting point. Remember to run `npm i` in the root of the experiment to install the necessary dependencies. Then, run `npm i @coglabuzh/webpsy.js` to install the production version of this library. Now, you can import the functions and types described below by including this at the top of any .ts/.js file:
+
+```typescript
+import { colorPicker, coloredGraphic } from "@coglabuzh/webpsy.js";
+```
+
 ## Stimuli
 
 These are functions that return HTML as a string. They can be used in any jsPsych trial that has a `stimulus` field. 

@@ -76,6 +76,12 @@
 #### Building
 
 - Run `npm run build` to compile the .ts into .js files (located in `/dist`). Only then will your changes be visible in the examples.
+- Run `npm run watch` to compile on every save. This is very convenient to see changes instantly when working on the library.
+
+#### Previewing Results
+
+- To see changes made in the library, it is best to create a new experiment in the examples folder that uses the functions you are working on.
+- To use the local version of the library (not the one currently published on npm) you have to run `npm install` with the relative path to the root of the libary. In the example experiments, this is `npm install ../..`.
 
 ### Project structure
 
