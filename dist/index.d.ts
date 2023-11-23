@@ -3,6 +3,7 @@ export { default as colorPicker } from './stimuli/color-picker/colorPicker';
 export { default as colorPickerRange } from './stimuli/color-picker-range/colorPickerRange';
 export { default as coloredGraphic } from './stimuli/colored-graphic/coloredGraphic';
 export { default as shuffle } from './basic-fun/shuffleArray';
+export { default as consentScreen } from './stimuli/consent-screen/consentScreen';
 export * from './basic-fun/colorWheel';
 export * from './basic-fun/attentionCheck';
 export * from './basic-fun/counterBalance';

@@ -3,6 +3,7 @@ interface blurObject {
     TRACK: boolean;
     MAX_BLUR: number;
     nBLUR: number;
+    FAILED_ATTENTION_CHECK: boolean;
 }
 /** Contro the browser interactions
  *

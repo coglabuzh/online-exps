@@ -36,6 +36,7 @@ function trackInteractions(blur, alert = true, jsPsych) {
                     });
             }
             else {
+                blur.FAILED_ATTENTION_CHECK = true;
                 sweetalert2_1.default.fire({
                     icon: "error",
                     title: "End",
@@ -45,8 +46,9 @@ function trackInteractions(blur, alert = true, jsPsych) {
                 we therefore have to end this experiment prematurely and we cannot grant you any credit.
                 `,
                     showConfirmButton: true,
+                }).then(() => {
+                    jsPsych.endExperiment();
                 });
-                jsPsych.endExperiment();
             }
         }
     }
