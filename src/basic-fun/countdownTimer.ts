@@ -17,13 +17,20 @@ export function countDownTimer(
   // allow to run timer
   window["run_timer"] = true;
 
-  const previous_on_finish_function = jsPsych.getCurrentTrial().on_finish;
+  if (jsPsych.getCurrentTrial().on_finish) {
+    const previous_on_finish_function = jsPsych.getCurrentTrial().on_finish;
 
-  // set window["run_timer"] to false at the end of the experiment so the timer stops
-  jsPsych.getCurrentTrial().on_finish = () => {
-    // execute original on_finish function first, then set false
-    previous_on_finish_function(), (window["run_timer"] = false);
-  };
+    // set window["run_timer"] to false at the end of the experiment so the timer stops
+    jsPsych.getCurrentTrial().on_finish = () => {
+      // execute original on_finish function first, then set false
+      previous_on_finish_function(), (window["run_timer"] = false);
+    };
+  } else {
+    jsPsych.getCurrentTrial().on_finish = () => {
+      // execute original on_finish function first, then set false
+      window["run_timer"] = false;
+    };
+  }
 
   var timer: number = parseInt(String(duration), 10); // Parse duration as an integer
   var minutes, seconds;

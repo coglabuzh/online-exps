@@ -4,11 +4,11 @@ import Swal from "sweetalert2";
 // JsPsych type
 import { JsPsych } from "jspsych";
 
-
 interface blurObject {
   TRACK: boolean;
   MAX_BLUR: number;
   nBLUR: number;
+  FAILED_ATTENTION_CHECK: boolean;
 }
 
 /** Contro the browser interactions
@@ -21,7 +21,11 @@ interface blurObject {
  * @param {string} code A string that is used to redirect the participant to the Prolific website.
  * @param alert A boolean value.
  */
-export function trackInteractions(blur: blurObject, alert = true, jsPsych: JsPsych) {
+export function trackInteractions(
+  blur: blurObject,
+  alert = true,
+  jsPsych: JsPsych
+) {
   // get the last interaction event
   let interactionData = JSON.parse(jsPsych.data.getInteractionData().json());
   let lastEvent = interactionData[interactionData.length - 1];
@@ -46,6 +50,7 @@ export function trackInteractions(blur: blurObject, alert = true, jsPsych: JsPsy
             jsPsych.resumeExperiment();
           });
       } else {
+        blur.FAILED_ATTENTION_CHECK = true;
         Swal.fire({
           icon: "error",
           title: "End",
@@ -55,9 +60,9 @@ export function trackInteractions(blur: blurObject, alert = true, jsPsych: JsPsy
                 we therefore have to end this experiment prematurely and we cannot grant you any credit.
                 `,
           showConfirmButton: true,
+        }).then(() => {
+          jsPsych.endExperiment();
         });
-
-        jsPsych.endExperiment();
       }
     }
   }
