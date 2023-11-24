@@ -39,4 +39,5 @@ __exportStar(require("./basic-fun/random"), exports);
 __exportStar(require("./basic-fun/sequence"), exports);
 __exportStar(require("./basic-fun/calculateAngle"), exports);
 __exportStar(require("./basic-fun/chunkTrials"), exports);
+__exportStar(require("./basic-fun/generateMathEquation"), exports);
 __exportStar(require("./types"), exports);

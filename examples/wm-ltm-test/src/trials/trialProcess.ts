@@ -8,10 +8,16 @@ import HtmlButtonResponsePlugin from "@jspsych/plugin-html-button-response";
 import { HtmlButtonResponseTrialData } from "@coglabuzh/webpsy.js";
 import { writeData } from "../task-fun/writeData";
 
+import { expInfo } from "../../settings";
+
 export const createNewTrial = () => {
   const words: word[] = word_stimuli.map((w) => ({ word: w.WORD }));
 
-  const stimuli = generateStims(words, 5, 10);
+  const stimuli = generateStims(
+    words,
+    expInfo.DESIGN.nBLOCKS,
+    expInfo.DESIGN.nTRIALS
+  );
 
   let trial_list: any[] = [];
 
@@ -21,7 +27,7 @@ export const createNewTrial = () => {
         type: HtmlKeyboardResponsePlugin,
         stimulus: `${word.word}`,
         prompt: "Memorize this word.",
-        trial_duration: 3000,
+        trial_duration: expInfo.TIMING.TRIAL_DURATION,
       };
       return trial;
     });
@@ -39,7 +45,7 @@ export const createNewTrial = () => {
       },
     };
 
-    trial_list.push(distraction_task)
+    trial_list.push(distraction_task);
   }
 
   for (const stim of stimuli.ltm_stimuli) {
