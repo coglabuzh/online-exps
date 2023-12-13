@@ -142,8 +142,6 @@ const generateWordStims = (
   word_stim_array: wordPairStim[];
   ltm_stim_array: wordPairLtmStim[];
 } => {
-
-
   let word_stim_array: Array<wordPairStim> = Array.from({
     length: num_ltm_stimuli,
   }).map((_, __) => ({
@@ -161,7 +159,19 @@ const generateWordStims = (
     }
   }
 
-  words = words.filter((w) => !wordFrequencyMap.has(w));
+  function containsWordByValue(map, obj) {
+    // Assuming 'obj' has a 'word' property.
+    for (let key of map.keys()) {
+      // Compare the 'word' property of the current key with the given obj's 'word' property
+      if (key.word === obj.word) {
+        return true;
+      }
+    }
+    // If no match was found
+    return false;
+  }
+
+  words = words.filter((w) => !containsWordByValue(wordFrequencyMap, w));
 
   for (let i = 0; i < num_ltm_stimuli; i++) {
     const remainingWordsNeeded = group_size - word_stim_array[i].words.length;
@@ -209,8 +219,6 @@ const generateColoredObjectStims = (
   word_stim_array: objectColorStim[];
   ltm_stim_array: objectColorLtmStim[];
 } => {
-  
-
   let word_stim_array: Array<objectColorStim> = Array.from({
     length: num_ltm_stimuli,
   }).map((_, __) => ({

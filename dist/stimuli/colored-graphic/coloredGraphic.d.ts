@@ -9,6 +9,8 @@ type Props = {
     height: number;
     /** Can listen to colors sent by other stimuli. The location here is the same as the source stimuli's window location. */
     listenLocation?: string;
+    cielab?: boolean;
+    cielabRotate?: number;
 };
 /**
  * Display a graphic (preferably SVG) that gets colored with the specified color

@@ -14,9 +14,12 @@ export const expInfo = {
     nTRIALS: 5, // number of trials in each block
   },
 
+  // specify custom frequencies for certain words here. If you specify the frequency as n, the word will appear n times, each in different trial blocks.
+  // Words where the frequency is not specified will appear either never or once.
+  // Specify the words in uppercase, since words that are here will only be filtered from the wordlist when they are exactly the same.
   FREQUENCY_MAP: new Map<word, number>([
-    [{ word: "word1" }, 4],
-    [{ word: "word2" }, 5],
+    [{ word: "FRAUD" }, 4],
+    [{ word: "BUDGET" }, 5],
   ]),
 
   // settings for each trial

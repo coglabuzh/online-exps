@@ -8,7 +8,7 @@
     "jatos": "npm run jspsych -- build --jatos"
   },
   "dependencies": {
-    "@coglabuzh/webpsy.js": "file:../..",
+    "@coglabuzh/webpsy.js": "^1.1.5",
     "@jspsych/plugin-fullscreen": "^1.1.2",
     "@jspsych/plugin-html-button-response": "^1.1.2",
     "@jspsych/plugin-html-keyboard-response": "^1.1.2",

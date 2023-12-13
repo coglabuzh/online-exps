@@ -22,6 +22,7 @@
   },
   "dependencies": {
     "@coglabuzh/webpsy.js": "^1.1.0",
+    "color-convert": "^2.0.1",
     "jspsych": "^7.3.3",
     "lit": "^2.8.0",
     "sweetalert2": "^11.7.32"
