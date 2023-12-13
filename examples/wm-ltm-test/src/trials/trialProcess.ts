@@ -16,7 +16,8 @@ export const createNewTrial = () => {
   const stimuli = generateStims(
     words,
     expInfo.DESIGN.nBLOCKS,
-    expInfo.DESIGN.nTRIALS
+    expInfo.DESIGN.nTRIALS,
+    expInfo.FREQUENCY_MAP
   );
 
   let trial_list: any[] = [];

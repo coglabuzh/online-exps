@@ -2,6 +2,8 @@
  * This file contains the settings for the experiment.
  */
 
+import { word, coloredObject } from "./src/trials/trialStim";
+
 export const expInfo = {
   // settings for the experiment
   TITLE: "the_name_of_your_experiment",
@@ -9,8 +11,13 @@ export const expInfo = {
   // design of the experiment
   DESIGN: {
     nBLOCKS: 5, // number of blocks
-    nTRIALS: 20, // number of trials in each block
+    nTRIALS: 5, // number of trials in each block
   },
+
+  FREQUENCY_MAP: new Map<word, number>([
+    [{ word: "word1" }, 4],
+    [{ word: "word2" }, 5],
+  ]),
 
   // settings for each trial
   TIMING: {
