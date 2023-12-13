@@ -1,7 +1,6 @@
 import { html } from "../utils";
 import ColoredGraphic from "./webComponent";
 
-
 type Props = {
   /** Link to image */
   graphic: string;
@@ -17,6 +16,10 @@ type Props = {
 
   /** Can listen to colors sent by other stimuli. The location here is the same as the source stimuli's window location. */
   listenLocation?: string;
+
+  cielab?: boolean;
+
+  cielabRotate?: number;
 };
 
 /**
@@ -35,6 +38,8 @@ export const coloredGraphic = (props: Props): string => {
       listenLocation=${props.listenLocation
         ? '"' + props.listenLocation + '"'
         : '""'}
+      ${props.cielab ? `cielab=${props.cielab}` : ""}
+      ${props.cielabRotate ? `cielch=${props.cielabRotate}` : ""}
     >
     </colored-graphic>
   `;

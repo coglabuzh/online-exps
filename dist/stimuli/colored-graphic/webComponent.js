@@ -8,6 +8,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 const lit_1 = require("lit");
 const decorators_js_1 = require("lit/decorators.js");
+const convert = require("color-convert");
 class Color {
     constructor(r, g, b) {
         this.set(r, g, b);
@@ -272,13 +273,19 @@ function hexToRgb(hex) {
 }
 let ColoredGraphic = class ColoredGraphic extends lit_1.LitElement {
     setColor() {
-        console.log(this.color);
-        const rgb = hexToRgb(this.color);
-        if (rgb === null || rgb.length !== 3) {
-            alert("Invalid format!");
-            return;
+        let color;
+        if (this.cielab) {
+            color = this.rotateImageByDegreeLab(this.cielabRotate);
         }
-        const color = new Color(rgb[0], rgb[1], rgb[2]);
+        else {
+            console.log(this.color);
+            const rgb = hexToRgb(this.color);
+            if (rgb === null || rgb.length !== 3) {
+                alert("Invalid format!");
+                return;
+            }
+            color = new Color(rgb[0], rgb[1], rgb[2]);
+        }
         const solver = new Solver(color);
         const result = solver.solve();
         console.log(result.filter);
@@ -290,6 +297,26 @@ let ColoredGraphic = class ColoredGraphic extends lit_1.LitElement {
   `;
         this.styles = styles;
         console.log(styles);
+    }
+    rotateImageByDegreeLab(degrees) {
+        // Convert the degree to radians
+        const radians = degrees * (Math.PI / 180);
+        // Adjust the modulus to keep the angle within the valid range [-180, 180)
+        let adjustedAngle = radians % (2 * Math.PI);
+        if (adjustedAngle < -Math.PI) {
+            adjustedAngle += 2 * Math.PI;
+        }
+        else if (adjustedAngle >= Math.PI) {
+            adjustedAngle -= 2 * Math.PI;
+        }
+        // Convert LAB color to RGB
+        const labColor = [50, 0, 0]; // Example LAB color
+        const rgbColor = convert.lab.rgb([
+            labColor[0],
+            labColor[1] * Math.cos(adjustedAngle),
+            labColor[2] * Math.sin(adjustedAngle),
+        ]);
+        return new Color(rgbColor[0], rgbColor[1], rgbColor[2]);
     }
     firstUpdated() {
         this.setColor();
@@ -322,6 +349,12 @@ __decorate([
 __decorate([
     (0, decorators_js_1.property)({ type: String })
 ], ColoredGraphic.prototype, "styles", void 0);
+__decorate([
+    (0, decorators_js_1.property)({ type: Boolean })
+], ColoredGraphic.prototype, "cielab", void 0);
+__decorate([
+    (0, decorators_js_1.property)({ type: Number })
+], ColoredGraphic.prototype, "cielabRotate", void 0);
 ColoredGraphic = __decorate([
     (0, decorators_js_1.customElement)("colored-graphic")
 ], ColoredGraphic);

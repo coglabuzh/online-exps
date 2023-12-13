@@ -18,6 +18,8 @@ const coloredGraphic = (props) => {
       listenLocation=${props.listenLocation
         ? '"' + props.listenLocation + '"'
         : '""'}
+      ${props.cielab ? `cielab=${props.cielab}` : ""}
+      ${props.cielabRotate ? `cielch=${props.cielabRotate}` : ""}
     >
     </colored-graphic>
   `;
