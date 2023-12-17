@@ -19,7 +19,6 @@ type Props = {
  * @returns string of html source code
  */
 export const consentScreen = (props: Props): string => {
-
   const consent_html = html`<style>
     input[type=checkbox] {
       zoom: 2;
@@ -99,6 +98,4 @@ export const consentScreen = (props: Props): string => {
   return consent_html;
 };
 
-
-
-export default consentScreen
+export default consentScreen;
