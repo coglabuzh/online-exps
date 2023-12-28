@@ -6,7 +6,7 @@ export { default as shuffle } from "./basic-fun/shuffleArray";
 export { default as consentScreen } from "./stimuli/consent-screen/consentScreen";
 export { default as arrangeInCircle } from "./stimuli/arrange/arrangeInCircle";
 export { default as arrangeInLine } from "./stimuli/arrange/arrangeInLine";
-export { default as arrangeElement } from "./stimuli/arrange/arrangeElement";
+export { default as arrangeInMatrix } from "./stimuli/arrange/arrangeInMatrix";
 export * from "./basic-fun/colorWheel";
 export * from "./basic-fun/attentionCheck";
 export * from "./basic-fun/counterBalance";

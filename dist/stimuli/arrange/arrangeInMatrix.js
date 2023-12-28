@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.arrangeInLine = void 0;
+exports.arrangeInMatrix = void 0;
 const utils_1 = require("../utils");
 /**
  * Display stimuli laid out in a circle.
  * @returns string of html source code
  */
-const defaultLocation = "arrange_in_line__result";
+const defaultLocation = "arrange_in_matrix__result";
 const getHTML = (stimulus, border, i, baseCSS) => {
     var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t;
     const response_function = `"window['${defaultLocation}'] = ${i}"`;
@@ -82,14 +82,14 @@ const getHTML = (stimulus, border, i, baseCSS) => {
     `;
     }
 };
-const arrangeInLine = (props) => {
+const arrangeInMatrix = (props) => {
     var _a, _b, _c;
-    const { stimuli, border } = props;
+    const { stimuli, border, numColumns } = props;
     const n = stimuli.length;
     const borderArray = Array.isArray(border)
         ? border
         : Array(stimuli.length).fill(border);
-    let genHtml = "<div style='display: flex; flex-direction: row; height: 100vh; align-items: center'>";
+    let genHtml = `<div style="display: grid; grid-template-columns: repeat(${numColumns}, minmax(0, 1fr)); gap: 100px; height: 100vh">`;
     for (let i = 0; i < n; i++) {
         const baseCSS = `border: ${(_a = borderArray[i].lineType) !== null && _a !== void 0 ? _a : "solid"} ${(_b = borderArray[i].lineWidth) !== null && _b !== void 0 ? _b : 1}px ${(_c = borderArray[i].lineColor) !== null && _c !== void 0 ? _c : "black"};
 			display: flex; 
@@ -102,5 +102,5 @@ const arrangeInLine = (props) => {
     genHtml += (0, utils_1.html) `</div>`;
     return genHtml;
 };
-exports.arrangeInLine = arrangeInLine;
-exports.default = exports.arrangeInLine;
+exports.arrangeInMatrix = arrangeInMatrix;
+exports.default = exports.arrangeInMatrix;
