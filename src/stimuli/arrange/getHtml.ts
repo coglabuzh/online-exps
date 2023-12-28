@@ -20,7 +20,7 @@ export const getHtml = (props: Props): string => {
   let markup = html`<div
     style="position: relative; width: 100%; height: 100%"
   ></div>`;
-  const defaultLocation = "circle_of_squares__result";
+  const defaultLocation = "arrange__result";
 
   const getHTML = (
     stimulus: Frame,

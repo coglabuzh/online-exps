@@ -14,7 +14,7 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
     for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.arrangeInLine = exports.arrangeInCircle = exports.consentScreen = exports.shuffle = exports.coloredGraphic = exports.colorPickerRange = exports.colorPicker = exports.circleOfSquares = void 0;
+exports.arrangeElement = exports.arrangeInLine = exports.arrangeInCircle = exports.consentScreen = exports.shuffle = exports.coloredGraphic = exports.colorPickerRange = exports.colorPicker = exports.circleOfSquares = void 0;
 var circleOfSquares_1 = require("./stimuli/circle-of-squares/circleOfSquares");
 Object.defineProperty(exports, "circleOfSquares", { enumerable: true, get: function () { return circleOfSquares_1.default; } });
 var colorPicker_1 = require("./stimuli/color-picker/colorPicker");
@@ -31,6 +31,8 @@ var arrangeInCircle_1 = require("./stimuli/arrange/arrangeInCircle");
 Object.defineProperty(exports, "arrangeInCircle", { enumerable: true, get: function () { return arrangeInCircle_1.default; } });
 var arrangeInLine_1 = require("./stimuli/arrange/arrangeInLine");
 Object.defineProperty(exports, "arrangeInLine", { enumerable: true, get: function () { return arrangeInLine_1.default; } });
+var arrangeElement_1 = require("./stimuli/arrange/arrangeElement");
+Object.defineProperty(exports, "arrangeElement", { enumerable: true, get: function () { return arrangeElement_1.default; } });
 __exportStar(require("./basic-fun/colorWheel"), exports);
 __exportStar(require("./basic-fun/attentionCheck"), exports);
 __exportStar(require("./basic-fun/counterBalance"), exports);

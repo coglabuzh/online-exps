@@ -4,68 +4,130 @@ import { html } from "../utils";
 
 type Props = {
   stimuli: Frame[];
-  centre: [number, number];
-  radius: number;
+
   border: Border | Border[];
-  start_position?: number;
 };
 
 /**
  * Display stimuli laid out in a circle.
  * @returns string of html source code
  */
+const defaultLocation = "arrange_in_line__result";
+const getHTML = (
+  stimulus: Frame,
+  border: Border,
+  i: number,
+  baseCSS: string
+) => {
+  const response_function = `"window['${defaultLocation}'] = ${i}"`;
+  if (stimulus.type == "image") {
+    const width = stimulus.width ?? 300;
+    const height = 200;
+
+    return html`
+      <div
+        ${stimulus.clickable && "onclick=" + response_function}
+        style="width: ${width}px;
+        height: ${height}px;
+        background-color: ${stimulus.background ?? "transparent"};
+        ${baseCSS}
+        transform: ${stimulus.angle ? `rotate(${stimulus.angle}deg)` : ""};"
+        aspect-ratio="${stimulus.ratio ?? 1}"
+      >
+        <img src="${stimulus.imagePath}" style="width: 100%; height: 100%;" />
+      </div>
+    `;
+  }
+  if (stimulus.type == "text") {
+    const width = 200;
+    const height = 200;
+    return html`
+      <div
+        ${stimulus.clickable && "onclick=" + response_function}
+        style="width: ${width}px;
+            height: ${height}px;
+            color: ${stimulus.color ?? "black"};
+      ${baseCSS}
+            transform: ${stimulus.angle ? `rotate(${stimulus.angle}deg)` : ""};"
+      >
+        <div
+          style="width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; font-size: ${stimulus.size ??
+          50}px; color: ${stimulus.color ??
+          "black"}; font-family: ${stimulus.family ?? "Arial"};   "
+        >
+          ${stimulus.content}
+        </div>
+      </div>
+    `;
+  }
+  if (stimulus.type == "rectangle") {
+    const width = stimulus.width ?? 100;
+    const height = stimulus.height ?? 100;
+
+    return html`
+      <div
+        ${stimulus.clickable && "onclick=" + response_function}
+        style="width: ${width}px;
+            height: ${height}px;
+            background-color: ${stimulus.fillColor ?? "transparent"};
+            border: ${stimulus.lineType ?? "solid"} ${stimulus.lineWidth ??
+        1}px ${stimulus.lineColor ?? "black"};
+
+            transform: ${stimulus.angle ? `rotate(${stimulus.angle}deg)` : ""};
+            ${baseCSS}
+            
+            "
+      ></div>
+    `;
+  }
+  if (stimulus.type == "circle") {
+    const radius = stimulus.radius ?? 100;
+
+    return html`
+      <div
+        ${stimulus.clickable && "onclick=" + response_function}
+        style=" ${baseCSS};
+          width: ${radius}px;
+            height: ${radius}px;
+            background-color: ${stimulus.fillColor ?? "transparent"};
+            border: ${stimulus.lineType ?? "solid"} ${stimulus.lineWidth ??
+        1}px ${stimulus.lineColor ?? "black"};
+            border-radius: 50%;
+             
+            transform: ${stimulus.angle ? `rotate(${stimulus.angle}deg)` : ""};"
+      ></div>
+    `;
+  }
+};
 
 export const arrangeInLine = (props: Props): string => {
-  const { stimuli, centre, radius, border, start_position } = props;
+  const { stimuli, border } = props;
 
   const n = stimuli.length;
 
-  const theta = (2 / n) * Math.PI;
+  const borderArray = Array.isArray(border)
+    ? border
+    : Array(stimuli.length).fill(border);
 
-  const getPosition = (
-    stimulus: Frame,
-
-    i: number
-  ) => {
-    if (stimulus.type == "image") {
-      const width = stimulus.width ?? 300;
-      const height = 200;
-      const offsetX = Math.sin(theta * (-2 - i)) * radius - width / 2;
-      const offsetY = Math.cos(theta * (-2 - i)) * radius - height / 2;
-      return [offsetX, offsetY];
-    }
-    if (stimulus.type == "text") {
-      const width = 200;
-      const height = 200;
-      const offsetX = Math.sin(theta * (-2 - i)) * radius - (width ?? 100) / 2;
-      const offsetY = Math.cos(theta * (-2 - i)) * radius - (height ?? 100) / 2;
-      return [offsetX, offsetY];
-    }
-    if (stimulus.type == "rectangle") {
-      const width = stimulus.width ?? 100;
-      const height = stimulus.height ?? 100;
-      const offsetX = Math.sin(theta * (-2 - i)) * radius - (width ?? 100) / 2;
-      const offsetY = Math.cos(theta * (-2 - i)) * radius - (height ?? 100) / 2;
-      return [offsetX, offsetY];
-    }
-    if (stimulus.type == "circle") {
-      const radius = stimulus.radius ?? 100;
-      const offsetX = Math.sin(theta * (-2 - i)) * radius - radius;
-      const offsetY = Math.cos(theta * (-2 - i)) * radius - radius;
-
-      return [offsetX, offsetY];
-    }
-  };
-
-  const positions = [];
+  let genHtml =
+    "<div style='display: flex; flex-direction: row; height: 100vh; align-items: center'>";
 
   for (let i = 0; i < n; i++) {
-    // Calculate the (x, y) coordinates of the current screen element.
+    const baseCSS = `border: ${borderArray[i].lineType ?? "solid"} ${
+      borderArray[i].lineWidth ?? 1
+    }px ${borderArray[i].lineColor ?? "black"};
+			display: flex; 
+			justify-content: center; 
+			align-items: center; 
+			
+      cursor: pointer;`;
 
-    positions.push(getPosition(stimuli[i], i));
+    genHtml += getHTML(stimuli[i], borderArray[i], i, baseCSS);
   }
 
-  return getHtml({ stimuli, border, positions });
+  genHtml += html`</div>`;
+
+  return genHtml;
 };
 
 export default arrangeInLine;

@@ -12,7 +12,7 @@ const getHtml = (props) => {
     let markup = (0, utils_1.html) `<div
     style="position: relative; width: 100%; height: 100%"
   ></div>`;
-    const defaultLocation = "circle_of_squares__result";
+    const defaultLocation = "arrange__result";
     const getHTML = (stimulus, border, i, baseCSS) => {
         var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t;
         const response_function = `"window['${defaultLocation}'] = ${i}"`;
