@@ -8,7 +8,9 @@ const webComponent_1 = require("./webComponent");
  * @returns string of html source code
  */
 const coloredGraphic = (props) => {
+    var _a, _b;
     new webComponent_1.default();
+    console.log("this");
     return (0, utils_1.html) `
     <colored-graphic
       graphic=${'"' + props.graphic + '"'}
@@ -18,8 +20,8 @@ const coloredGraphic = (props) => {
       listenLocation=${props.listenLocation
         ? '"' + props.listenLocation + '"'
         : '""'}
-      ${props.cielab ? `cielab=${props.cielab}` : ""}
-      ${props.cielabRotate ? `cielch=${props.cielabRotate}` : ""}
+      cielab=${(_a = props.cielab) !== null && _a !== void 0 ? _a : false}
+      cielabRotate=${(_b = props.cielabRotate) !== null && _b !== void 0 ? _b : 0}
     >
     </colored-graphic>
   `;

@@ -132,10 +132,29 @@ export async function run({
         },
       ],
       centre: [0, 0],
-      radius: 400,
+      radius: 350,
       border: { lineWidth: 5, lineColor: "red", lineType: "dashed" },
       start_position: 2,
     }),
+
+    choices: ["Hello", " "], // The only valid key response is the space bar.
+    // trial_duration: 10000, // Time to wait before automatically proceeding with the next trial.
+    post_trial_gap: 300, // forced inter-trial interval after participant's response.
+
+    on_finish: function () {},
+  };
+
+  const trialLine = {
+    type: HtmlKeyboardResponsePlugin,
+    stimulus:
+      "<div>hello world</div>" +
+      arrangeInLine({
+        stimuli: [],
+        centre: [0, 0],
+        radius: 350,
+        border: { lineWidth: 5, lineColor: "red", lineType: "dashed" },
+        start_position: 2,
+      }),
 
     choices: ["Hello", " "], // The only valid key response is the space bar.
     // trial_duration: 10000, // Time to wait before automatically proceeding with the next trial.

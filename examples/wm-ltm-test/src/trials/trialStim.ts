@@ -46,12 +46,16 @@ type LtmStimMap<T> = T extends word
   ? objectColorLtmStim
   : never;
 
-function isWord(obj: any): obj is word {
-  return typeof obj === "object" && "word" in obj;
+export function isWord(item: any): item is word {
+  return item && typeof item.word === "string";
 }
 
-function isColoredObject(obj: any): obj is coloredObject {
-  return typeof obj === "object" && "object" in obj;
+export function isColoredObject(item: any): item is coloredObject {
+  return (
+    item &&
+    typeof item.filePath === "string" &&
+    typeof item.rotationAngle === "number"
+  );
 }
 
 export function isWordArray(arr: any[]): arr is word[] {
@@ -64,6 +68,24 @@ export function isColoredObjectArray(arr: any[]): arr is coloredObject[] {
       item &&
       typeof item.filePath === "string" &&
       typeof item.rotationAngle === "number"
+  );
+}
+
+export function isWordPairStim(item: any): item is wordPairStim {
+  return (
+    item &&
+    item.type === "wordPairStim" &&
+    Array.isArray(item.words) &&
+    isWordArray(item.words)
+  );
+}
+
+export function isObjectColorStim(item: any): item is objectColorStim {
+  return (
+    item &&
+    item.type === "objectColorStim" &&
+    Array.isArray(item.objects) &&
+    isColoredObjectArray(item.objects)
   );
 }
 
@@ -87,12 +109,28 @@ export function isObjectColorStimArray(arr: any[]): arr is objectColorStim[] {
   );
 }
 
+export function isWordPairLtmStim(item: any): item is wordPairLtmStim {
+  return (
+    item &&
+    item.type === "wordPairLtmStim" &&
+    isWord(item.probe_word) &&
+    isWord(item.new_word) &&
+    (item.order === "probe_first" || item.order === "new_first")
+  );
+}
+
+export function isObjectColorLtmStim(item: any): item is objectColorLtmStim {
+  return (
+    item && item.type === "objectColorLtmStim" && isColoredObject(item.object)
+  );
+}
+
 export type wordStims = {
   wm_stimuli: wordPairStim[];
   ltm_stimuli: wordPairLtmStim[];
 };
 
-export const generateStims = <T extends word | coloredObject>(
+export const generateStims = <T extends coloredObject | word>(
   words: T[],
   group_size: number = 5,
   num_ltm_stimuli = 5,

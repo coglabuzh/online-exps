@@ -29,6 +29,8 @@ type Props = {
 export const coloredGraphic = (props: Props): string => {
   new ColoredGraphic();
 
+  console.log("this");
+
   return html`
     <colored-graphic
       graphic=${'"' + props.graphic + '"'}
@@ -38,8 +40,8 @@ export const coloredGraphic = (props: Props): string => {
       listenLocation=${props.listenLocation
         ? '"' + props.listenLocation + '"'
         : '""'}
-      ${props.cielab ? `cielab=${props.cielab}` : ""}
-      ${props.cielabRotate ? `cielch=${props.cielabRotate}` : ""}
+      cielab=${props.cielab ?? false}
+      cielabRotate=${props.cielabRotate ?? 0}
     >
     </colored-graphic>
   `;

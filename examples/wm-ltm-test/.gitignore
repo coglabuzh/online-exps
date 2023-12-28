@@ -1,2 +1,3 @@
 node_modules
 .jspsych-builder/**/*
+assets/color-rotation-stimuli/*

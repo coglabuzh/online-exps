@@ -14,13 +14,42 @@ export const expInfo = {
     nTRIALS: 5, // number of trials in each block
   },
 
+  OBJECTS_TYPE: "object", // "word" or "object"
+
   // specify custom frequencies for certain words here. If you specify the frequency as n, the word will appear n times, each in different trial blocks.
   // Words where the frequency is not specified will appear either never or once.
   // Specify the words in uppercase, since words that are here will only be filtered from the wordlist when they are exactly the same.
-  FREQUENCY_MAP: new Map<word, number>([
-    [{ word: "FRAUD" }, 4],
-    [{ word: "BUDGET" }, 5],
+  FREQUENCY_MAP: new Map<coloredObject, number>([
+    [
+      {
+        filePath: "color-rotation-stimuli/obj540.jpg",
+        rotationAngle: 0,
+      },
+      4,
+    ],
+    [
+      {
+        filePath: "color-rotation-stimuli/obj539.jpg",
+        rotationAngle: 180,
+      },
+      5,
+    ],
   ]),
+
+  // FREQUENCY_MAP: new Map<word, number>([
+  //   [
+  //     {
+  //       word: "FRAUD",
+  //     },
+  //     4,
+  //   ],
+  //   [
+  //     {
+  //       word: "MISERY",
+  //     },
+  //     5,
+  //   ],
+  // ]),
 
   // settings for each trial
   TIMING: {

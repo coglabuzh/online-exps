@@ -348,7 +348,9 @@ export default class ColoredGraphic extends LitElement {
   setColor(): void {
     let color: Color;
     if (this.cielab) {
+      console.log(this.cielabRotate);
       color = this.rotateImageByDegreeLab(this.cielabRotate);
+      console.log(color);
     } else {
       console.log(this.color);
       const rgb = hexToRgb(this.color);
@@ -379,16 +381,21 @@ export default class ColoredGraphic extends LitElement {
     // Convert the degree to radians
     const radians = degrees * (Math.PI / 180);
 
+    console.log(degrees);
+
     // Adjust the modulus to keep the angle within the valid range [-180, 180)
     let adjustedAngle = radians % (2 * Math.PI);
+    console.log(adjustedAngle);
     if (adjustedAngle < -Math.PI) {
       adjustedAngle += 2 * Math.PI;
     } else if (adjustedAngle >= Math.PI) {
       adjustedAngle -= 2 * Math.PI;
     }
 
+    console.log(adjustedAngle);
+
     // Convert LAB color to RGB
-    const labColor: convert.LAB = [50, 0, 0]; // Example LAB color
+    const labColor: convert.LAB = [0, 0, 0];
     const rgbColor = convert.lab.rgb([
       labColor[0],
       labColor[1] * Math.cos(adjustedAngle),
