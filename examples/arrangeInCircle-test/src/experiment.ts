@@ -128,13 +128,14 @@ export async function run({
         },
         {
           type: "text",
-          content: "tessdsft",
+          content: "abc",
         },
       ],
       centre: [0, 0],
       radius: 350,
       border: { lineWidth: 5, lineColor: "red", lineType: "dashed" },
       start_position: 2,
+      rotateDegrees: 45,
     }),
 
     choices: ["Hello", " "], // The only valid key response is the space bar.
@@ -150,10 +151,8 @@ export async function run({
       "<div>hello world</div>" +
       arrangeInLine({
         stimuli: [],
-        centre: [0, 0],
-        radius: 350,
+
         border: { lineWidth: 5, lineColor: "red", lineType: "dashed" },
-        start_position: 2,
       }),
 
     choices: ["Hello", " "], // The only valid key response is the space bar.

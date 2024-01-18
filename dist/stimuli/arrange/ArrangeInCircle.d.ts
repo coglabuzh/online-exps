@@ -5,6 +5,7 @@ type Props = {
     radius: number;
     border: Border | Border[];
     start_position?: number;
+    rotateDegrees?: number;
 };
 /**
  * Display stimuli laid out in a circle.

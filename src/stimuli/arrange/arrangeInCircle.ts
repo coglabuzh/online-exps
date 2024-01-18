@@ -8,6 +8,7 @@ type Props = {
   radius: number;
   border: Border | Border[];
   start_position?: number;
+  rotateDegrees?: number;
 };
 
 /**
@@ -16,63 +17,44 @@ type Props = {
  */
 
 export const arrangeInCircle = (props: Props): string => {
-  const { stimuli, centre, radius, border, start_position } = props;
+  const { stimuli, centre, radius, border, start_position, rotateDegrees } =
+    props;
 
   const n = stimuli.length;
 
   const theta = (2 / n) * Math.PI;
 
+  const rotateRadians = ((props.rotateDegrees ?? 0) * Math.PI) / 180;
+
   const getPosition = (stimulus: Frame, i: number): [number, number] => {
+    const angle =
+      theta * (-2 - ((i + start_position) % stimuli.length)) - rotateRadians;
+
     if (stimulus.type == "image") {
       const width = stimulus.width ?? 300;
       const height = 200;
-      const offsetX =
-        Math.sin(theta * (-2 - ((i + start_position) % stimuli.length))) *
-          radius -
-        width / 2;
-      const offsetY =
-        Math.cos(theta * (-2 - ((i + start_position) % stimuli.length))) *
-          radius -
-        height / 2;
+      const offsetX = Math.sin(angle) * radius - width / 2;
+      const offsetY = Math.cos(angle) * radius - height / 2;
       return [offsetX, offsetY];
     }
     if (stimulus.type == "text") {
       const width = 200;
       const height = 200;
-      const offsetX =
-        Math.sin(theta * (-2 - ((i + start_position) % stimuli.length))) *
-          radius -
-        (width ?? 100) / 2;
-      const offsetY =
-        Math.cos(theta * (-2 - ((i + start_position) % stimuli.length))) *
-          radius -
-        (height ?? 100) / 2;
+      const offsetX = Math.sin(angle) * radius - (width ?? 100) / 2;
+      const offsetY = Math.cos(angle) * radius - (height ?? 100) / 2;
       return [offsetX, offsetY];
     }
     if (stimulus.type == "rectangle") {
       const width = stimulus.width ?? 100;
       const height = stimulus.height ?? 100;
-      const offsetX =
-        Math.sin(theta * (-2 - ((i + start_position) % stimuli.length))) *
-          radius -
-        (width ?? 100) / 2;
-      const offsetY =
-        Math.cos(theta * (-2 - ((i + start_position) % stimuli.length))) *
-          radius -
-        (height ?? 100) / 2;
+      const offsetX = Math.sin(angle) * radius - (width ?? 100) / 2;
+      const offsetY = Math.cos(angle) * radius - (height ?? 100) / 2;
       return [offsetX, offsetY];
     }
     if (stimulus.type == "circle") {
       const radius = stimulus.radius ?? 100;
-      const offsetX =
-        Math.sin(theta * (-2 - ((i + start_position) % stimuli.length))) *
-          radius -
-        radius;
-      const offsetY =
-        Math.cos(theta * (-2 - ((i + start_position) % stimuli.length))) *
-          radius -
-        radius;
-
+      const offsetX = Math.sin(angle) * radius - radius;
+      const offsetY = Math.cos(angle) * radius - radius;
       return [offsetX, offsetY];
     }
   };
